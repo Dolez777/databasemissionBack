@@ -37,23 +37,8 @@ ALTER TABLE games
 ADD genre_id int,
 ADD FOREIGN key (genre_id) REFERENCES genre(genre_id)
 
-/*
-DROP TABLE IF EXISTS person;
-CREATE TABLE person(  
-    ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(150),
-    lastname VARCHAR(150),
-    username VARCHAR(150) UNIQUE,
-    password VARCHAR(150)
+insert into genre (genre_name) values ("Kauhu");
+insert into genre (genre_name) values ("FPS");
 
-    DROP TABLE IF EXISTS worktime;
-CREATE TABLE worktime(  
-    ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    start_time DATETIME,
-    end_time DATETIME,
-    task_description TEXT,
-    person_id INT NOT NULL,
-    
-    CONSTRAINT `fk_person`
-    FOREIGN KEY (person_id) REFERENCES person(id)
-); */ 
+INSERT into games (game_name, genre_id) values ("Outlast", 1);
+INSERT into games (game_name, genre_id) values ("CS", 2);
