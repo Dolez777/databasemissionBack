@@ -3,8 +3,10 @@
 
 DROP TABLE IF EXISTS gamedp;
 
+DROP DATABASE IF EXISTS gamedp;
 
-CREATE DATABASE gamedp
+
+CREATE DATABASE gamedp;
 
 -- Person table
 
@@ -20,36 +22,38 @@ CREATE TABLE person (
 CREATE TABLE games(
 	game_id int NOT NULL AUTO_INCREMENT UNIQUE,
     game_name varchar(100) NOT NULL,
+use gamedp;
+
+CREATE TABLE games (
+	id int primary key AUTO_INCREMENT,
+    name varchar(100) NOT NULL unique,
     releaseDate date,
     rating decimal(2,2),
-    revenue decimal(10,2),
-    PRIMARY KEY (game_id)
+    revenue decimal(10,2)
 );
 
-CREATE TABLE genre(
-	genre_id int not null AUTO_INCREMENT UNIQUE,
-    genre_name varchar(100) not null,
-    primary key (genre_id)
+CREATE TABLE genre (
+	id int primary key AUTO_INCREMENT,
+    name varchar(100) not null unique
 );
 
-CREATE TABLE system(
-	system_id int not null AUTO_INCREMENT UNIQUE,
-    system_name varchar(100) not null,
+CREATE TABLE system (
+	id int primary key AUTO_INCREMENT,
+    name varchar(100) not null unique,
     type varchar(100),
-    releasedate date,
-    primary key (system_id)
+    releasedate date
 );
 
 ALTER TABLE games
 ADD system_id int,
-ADD FOREIGN key (system_id) REFERENCES system(system_id)
-
-ALTER TABLE games
 ADD genre_id int,
-ADD FOREIGN key (genre_id) REFERENCES genre(genre_id)
+ADD FOREIGN key (system_id) REFERENCES system(id),
+ADD FOREIGN key (genre_id) REFERENCES genre(id);
 
-insert into genre (genre_name) values ("Kauhu");
-insert into genre (genre_name) values ("FPS");
 
-INSERT into games (game_name, genre_id) values ("Outlast", 1);
-INSERT into games (game_name, genre_id) values ("CS", 2);
+
+insert into genre (name) values ("Kauhu");
+insert into genre (name) values ("FPS");
+
+INSERT into games (name, genre_id) values ("Outlast", 1);
+INSERT into games (name, genre_id) values ("CS", 2);
