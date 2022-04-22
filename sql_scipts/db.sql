@@ -1,10 +1,21 @@
 -- CREATE TABLES
 
--- Person table
+
 DROP TABLE IF EXISTS gamedp;
 
 
 CREATE DATABASE gamedp
+
+-- Person table
+
+DROP TABLE IF EXISTS person;
+
+CREATE TABLE person (
+     ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+     username VARCHAR(150), NOT NULL, UNIQUE,
+     password VARCHAR(150), NOT NULL,
+
+);
 
 CREATE TABLE games(
 	game_id int NOT NULL AUTO_INCREMENT UNIQUE,
