@@ -31,12 +31,10 @@ CREATE TABLE system (
 ALTER TABLE games
 ADD system_id int,
 ADD genre_id int,
-ADD FOREIGN key (system_id) REFERENCES system(id)
+ADD FOREIGN key (system_id) REFERENCES system(id),
 ADD FOREIGN key (genre_id) REFERENCES genre(id);
 
-ALTER TABLE games
-ADD genre_id int,
-ADD FOREIGN key (genre_id) REFERENCES genre(id)
+
 
 insert into genre (name) values ("Kauhu");
 insert into genre (name) values ("FPS");
