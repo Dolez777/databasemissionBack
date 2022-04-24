@@ -1,14 +1,12 @@
 -- CREATE TABLES
 
-
-DROP TABLE IF EXISTS gamedp;
-
 DROP DATABASE IF EXISTS gamedp;
 
 
 CREATE DATABASE gamedp;
 
 -- Person table
+USE gamedp;
 
 DROP TABLE IF EXISTS person;
 
@@ -19,10 +17,6 @@ CREATE TABLE person (
 
 );
 
-CREATE TABLE games(
-	game_id int NOT NULL AUTO_INCREMENT UNIQUE,
-    game_name varchar(100) NOT NULL,
-use gamedp;
 
 CREATE TABLE games (
 	id int primary key AUTO_INCREMENT,
