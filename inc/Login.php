@@ -1,25 +1,37 @@
 <?php
-require 'connect.php';
-header("Access-Control-Allow-Origin: http://localhost:3000");
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
- 
-$postdata = file_get_contents("php://input");
-if(isset($postdata) && !empty($postdata)){
-    $request = json_decode($postdata);
-     
-     
-    $firstname = $request->firstname;
-    $lastname = $request->lastname;
-    $username = $request->$username;
-    $password = $request->password;
-    $sql = "INSERT INTO users (firstname,lastname,username,password) VALUES ('$firstname','$lastname','$username','$password')";
-    if(mysqli_query($db,$sql)){
-        http_response_code(201);
+$uname = filter_input(INPUT_POST, "username");
+$pw = filter_input(INPUT_POST, "password");
+
+if(!isset($_SESSION["username"]) && isset($uname)){
+
+    try {
+        login($uname, $pw);
+        header("Location: index.php");
+        exit;
+    } catch (Exception $e) {
+        echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
     }
-    else{
-         http_response_code(422); 
-    }
-         
+   
 }
-?> 
+
+    if(!isset($_SESSION["usename"])){
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-2">
+            <h3>Kirjaudu sisään</h3>
+            <form action="login.php" method="post" class="">
+                <label for="username" class="m-1">Käyttäjänimi:</label><br>
+                <input type="text" name="username" id="username" class="m-1"><br>
+                <label for="password" class="m-1">Salasana:</label><br>
+                <input type="password" name="password" id="password" class="m-1"><br>
+                <input type="submit" class="btn btn-primary m-1" value="Kirjaudu sisään">
+             </form>
+        </div>
+        <div class="col-4">
+            <?php include 'person.php'; ?>
+        </div>
+    </div>
+</div>
+
+<?php } 
