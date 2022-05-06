@@ -2,34 +2,6 @@
 require_once "../inc/functions.php";
 require_once "../inc/headers.php";
 
-
-    $fname = filter_input(INPUT_POST, "fname");
-
-
-
-
-    if(isset($fname)) {
-        try{
-            addGame($fname);
-            echo '<div class="alert alert-success" role="alert">Game added!!</div>';
-        }catch(Exception $e){
-            echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
 $input = json_decode(file_get_contents("php://input"));
 $name = filter_var($input->name,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 //$amount = filter_var($input->amount,FILTER_SANITIZE_NUMBER_INT);
@@ -53,4 +25,4 @@ try{
     print json_encode($data);
     } catch (PDOException $pdoex) {
         returnError($pdoex);
-    } */
+    }
