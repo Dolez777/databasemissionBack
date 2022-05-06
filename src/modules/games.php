@@ -1,18 +1,19 @@
 <?php
-require_once "../inc/functions.php";
-require_once "../inc/headers.php";
+require_once INC_DIR."functions.php";
+require_once INC_DIR."headers.php";
 
 function getGames(){
     require_once 'db.php';
 
     try{
         $pdo = getPdoConnection();
-        // Create SQL query to get all rows from a table
         $sql = "SELECT * FROM games";
-        // Execute the query
-        $games = $pdo->query($sql);
-
-        return $people->fetchAll();
+        $games = $pdo->prepare($sql);
+        $games->execute();
+        $result = $games->fetchAll(PDO::FETCH_ASSOC);
+        $json = json_encode($result);
+        echo $json;
+        return $json;
     }catch(PDOException $e){
         throw $e;
     }

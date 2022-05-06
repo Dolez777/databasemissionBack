@@ -1,11 +1,12 @@
 <?php
-require_once "../inc/functions.php";
-require_once "../inc/headers.php";
+require_once INC_DIR."functions.php";
+require_once INC_DIR."headers.php";
+require_once MODULES_DIR."games.php";
 
 
     $fname = filter_input(INPUT_POST, "fname");
 
-
+    getgames();
 
 
     if(isset($fname)) {
