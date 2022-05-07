@@ -14,5 +14,4 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
         header("Access-Control-Allow_Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 
     exit(0);
-
 }
