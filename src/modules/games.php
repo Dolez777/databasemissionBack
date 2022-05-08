@@ -43,8 +43,11 @@ function addGame($name){
 
 
     try{
-        //$pdo = getPdoConnection();
-        $pdo ->beginTransaction();
+        $pdo = getPdoConnection();
+        $statement = $pdo->prepare("INSERT INTO games (name) VALUES (:name)");
+        $pdo->beginTransaction();
+        
+        $statement->execute(["name"=>$name]);
             //Suoritetaan parametrien lisääminen tietokantaan.
             //$sql = "INSERT INTO games (name) VALUES (?)";
             //$statement = $pdo->prepare($sql);
@@ -54,13 +57,14 @@ function addGame($name){
             //$hash_pw = password_hash($pw, PASSWORD_DEFAULT);
             //$statement->bindParam(4, $hash_pw);
 
-            $dbcon->exec("");
+            $pdo->commit();
         
     
         $statement->execute();
-    
-        echo "Peli ".$name."on lisätty tietokantaan"; 
-    }catch(PDOException $e){
+    }catch(\Exception $e){
+        if ($pdo->inTransaction()) {
+            $pdo->rollback();
+        }
         throw $e;
     }
 }
