@@ -1,4 +1,6 @@
 <?php
+
+
 function login($uname, $pw){
 
     require_once MODULES_DIR.'db.php';
@@ -19,7 +21,7 @@ function login($uname, $pw){
     try{
         $pdo = getPdoConnection();
         //Haetaan käyttäjä annetulla käyttäjänimellä
-        $sql = "SELECT username, password, firstname, lastname FROM person WHERE username=?";
+        $sql = "SELECT username, password FROM users WHERE username=?";
         $statement = $pdo->prepare($sql);
         $statement->bindParam(1, $uname);
         $statement->execute();
@@ -37,8 +39,6 @@ function login($uname, $pw){
 
         //Jos käyttäjä tunnistettu, talletetaan käyttäjän tiedot sessioon
         $_SESSION["username"] = $uname;
-        $_SESSION["fname"] = $row["firstname"];
-        $_SESSION["lname"] = $row["lastname"];
 
     }catch(PDOException $e){
         throw $e;

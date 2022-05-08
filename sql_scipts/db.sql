@@ -8,14 +8,13 @@ CREATE DATABASE gamedp;
 -- Person table
 USE gamedp;
 
-DROP TABLE IF EXISTS administrator;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE administrator(  
+CREATE TABLE users(  
     ID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(150),
-    lastname VARCHAR(150),
     username VARCHAR(150) UNIQUE,
-    password VARCHAR(150)
+    password VARCHAR(150),
+    admin int(0)
 );
 
 
