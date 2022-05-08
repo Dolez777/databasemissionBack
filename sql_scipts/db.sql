@@ -17,6 +17,8 @@ CREATE TABLE users(
     admin int(0)
 );
 
+INSERT into users (username, password) values ("admin", "qwerty");
+
 
 CREATE TABLE games (
 	id int primary key AUTO_INCREMENT,

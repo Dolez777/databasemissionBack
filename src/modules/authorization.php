@@ -4,18 +4,18 @@
 function login($uname, $pw){
 
     require_once MODULES_DIR.'db.php';
-
+    
     // $uname = filter_input(INPUT_POST, "username");
     // $pw = filter_input(INPUT_POST, "password");
 
     //Tarkistetaan onko muttujia asetettu
     if( !isset($uname) || !isset($pw) ){
-        throw new Exception("Missing parameters. Cannot log in.");
+        echo "Missing parameters. Cannot log in.";
     }
 
     //Tarkistetaan, ettei tyhjiä arvoja muuttujissa
     if( empty($uname) || empty($pw) ){
-        throw new Exception("Cannot log in with empty values.");
+        echo "Cannot log in with empty values.";
     }
 
     try{
@@ -25,19 +25,22 @@ function login($uname, $pw){
         $statement = $pdo->prepare($sql);
         $statement->bindParam(1, $uname);
         $statement->execute();
-
+        
         if($statement->rowCount() <=0){
-            throw new Exception("Person not found! Cannot log in!");
+            echo "Person not found! Cannot log in!";
+            echo "mitä";
         }
 
         $row = $statement->fetch();
 
         //Tarkistetaan käyttäjän antama salasana tietokannan salasanaa vasten
         if(!password_verify($pw, $row["password"] )){
-            throw new Exception("Wrong password!!");
+            echo "Wrong password!!";
+            echo "mitä";
         }
 
         //Jos käyttäjä tunnistettu, talletetaan käyttäjän tiedot sessioon
+        
         $_SESSION["username"] = $uname;
 
     }catch(PDOException $e){
