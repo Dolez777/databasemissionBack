@@ -51,7 +51,7 @@ insert into genre (name) values ("Kauhupelit");
 insert into genre (name) values ("FPS");
 insert into genre (name) values ("Strategiapelit");
 insert into genre (name) values ("Ajopelit");
-insert into genre (name) values ("RP");
+insert into genre (name) values ("Roolipelit");
 insert into genre (name) values ("Tappelupelit");
 insert into genre (name) values ("MMO");
 insert into genre (name) values ("Seikkailupelit");
