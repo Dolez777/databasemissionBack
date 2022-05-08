@@ -6,4 +6,4 @@ require_once MODULES_DIR."games.php";
 $name = filter_input(INPUT_POST, "name");
 
 
-//updateGame($name);
+updateGame($id, $name, $releaseDate, $rating, $revenue);
