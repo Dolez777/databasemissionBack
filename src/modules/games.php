@@ -20,7 +20,7 @@ function getGames(){
 }
 
 
-function addgame($fname){
+function addGame($name){
     require_once 'db.php'; // DB connection
     
     //Tarkistetaan onko muttujia asetettu
@@ -28,7 +28,7 @@ function addgame($fname){
         throw new Exception("Missing parameters! Cannot add person!");
     }*/
 
-    if( !isset($fname)){
+    if( !isset($name)){
         throw new Exception("Missing parameters! Cannot add game!");
     }
     
@@ -37,27 +37,29 @@ function addgame($fname){
         throw new Exception("Cannot set empty values!");
     } */
     
-    if( empty($fname) ){
+    if( empty($name) ){
         throw new Exception("Cannot set empty values!");
     }
 
 
     try{
-        $pdo = getPdoConnection();
-        //Suoritetaan parametrien lisääminen tietokantaan.
-        $sql = "INSERT INTO games (name) VALUES (?)";
-        $statement = $pdo->prepare($sql);
-        $statement->bindParam(1, $fname);
-        //$statement->bindParam(2, $lname);
-        //$statement->bindParam(3, $uname);
-    
-        //$hash_pw = password_hash($pw, PASSWORD_DEFAULT);
-        //$statement->bindParam(4, $hash_pw);
+        //$pdo = getPdoConnection();
+        $pdo ->beginTransaction();
+            //Suoritetaan parametrien lisääminen tietokantaan.
+            //$sql = "INSERT INTO games (name) VALUES (?)";
+            //$statement = $pdo->prepare($sql);
+           //$statement->bindParam(1, $name);
+            //$statement->bindParam(2, $lname);
+            //$statement->bindParam(3, $uname);
+            //$hash_pw = password_hash($pw, PASSWORD_DEFAULT);
+            //$statement->bindParam(4, $hash_pw);
+
+            $dbcon->exec("");
         
     
         $statement->execute();
     
-        echo "Peli ".$fname."on lisätty tietokantaan"; 
+        echo "Peli ".$name."on lisätty tietokantaan"; 
     }catch(PDOException $e){
         throw $e;
     }
