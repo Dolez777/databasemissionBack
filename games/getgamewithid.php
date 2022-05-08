@@ -10,7 +10,7 @@ try {
     $db = openDb();
     
 
-    $sql = "select * from games where id = $product_id";
+    $sql = "select * from games where id = $game_id";
     $query = $db->query($sql);
     $games = $query->fetchAll(PDO::FETCH_ASSOC);
 
