@@ -1,39 +1,82 @@
 <?php
 
-    $fname = filter_input(INPUT_POST, "fname");
-    $lname = filter_input(INPUT_POST, "lname");
-    $uname = filter_input(INPUT_POST, "username");
-    $pw = filter_input(INPUT_POST, "password");
+function getPeople(){
+    require_once MODULES_DIR.'db.php';
 
-    if(isset($fname)){
-        try{
-            addPerson($fname, $lname, $uname, $pw);
-        }catch(Exception $e){
-            echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
-        }
-        
+    try{
+        $pdo = getPdoConnection();
+        // Create SQL query to get all rows from a table
+        $sql = "SELECT * FROM person";
+        // Execute the query
+        $people = $pdo->query($sql);
+
+        return $people->fetchAll();
+    }catch(PDOException $e){
+        throw $e;
     }
+}
 
-?> 
-    <h3>Luo uusi käyttäjä</h3>
-    <form action="person.php" method="post">
-        <label for="fname" class="m-1">Etunimi:</label>
-        <br>
-        <input type="text" name="fname" id="fname" class="m-1">
-        <br>
-        <label for="lname" class="m-1">Sukunimi:</label>
-        <br>
-        <input type="text" name="lname" id="lname" class="m-1">
-        <br>
-        <label for="username" class="m-1">Käyttäjänimi:</label>
-        <br>
-        <input type="text" name="username" id="username" class="m-1">
-        <br>
-        <label for="password" class="m-1">Salasana:</label>
-        <br>
-        <input type="password" name="password" id="password" class="m-1">
-        <br>
-        <input type="submit" class="btn btn-primary m-1" value="Luo käyttäjä">
-    </form>
+function addPerson($fname, $lname, $uname, $pw){
+    require_once MODULES_DIR.'db.php'; // DB connection
+    
+    //Tarkistetaan onko muttujia asetettu
+    if( !isset($fname) || !isset($lname) || !isset($uname) || !isset($pw) ){
+        throw new Exception("Missing parameters! Cannot add person!");
+    }
+    
+    //Tarkistetaan, ettei tyhjiä arvoja muuttujissa
+    if( empty($fname) || empty($lname) || empty($uname) || empty($pw) ){
+        throw new Exception("Cannot set empty values!");
+    }
+    
+    try{
+        $pdo = getPdoConnection();
+        //Suoritetaan parametrien lisääminen tietokantaan.
+        $sql = "INSERT INTO person (firstname, lastname, username, password) VALUES (?, ?, ?, ?)";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $fname);
+        $statement->bindParam(2, $lname);
+        $statement->bindParam(3, $uname);
+    
+        $hash_pw = password_hash($pw, PASSWORD_DEFAULT);
+        $statement->bindParam(4, $hash_pw);
+        
+    
+        $statement->execute();
+    
+        echo "Tervetuloa ".$fname." ".$lname.". Sinut on lisätty tietokantaan"; 
+    }catch(PDOException $e){
+        throw $e;
+    }
+}
 
-<?
+function deletePerson($id){
+    require_once MODULES_DIR.'db.php'; // DB connection
+    
+    //Tarkistetaan onko muttujia asetettu
+    if( !isset($id) ){
+        throw new Exception("Missing parameters! Cannot delete person!");
+    }
+    
+    try{
+        $pdo = getPdoConnection();
+        // Start transaction
+        $pdo->beginTransaction();
+        // Delete from worktime table
+        $sql = "DELETE FROM worktime WHERE person_id = ?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $id);        
+        $statement->execute();
+        // Delete from person table
+        $sql = "DELETE FROM person WHERE ID = ?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $id);        
+        $statement->execute();
+        // Commit transaction
+        $pdo->commit();
+    }catch(PDOException $e){
+        // Rollback transaction on error
+        $pdo->rollBack();
+        throw $e;
+    }
+}
