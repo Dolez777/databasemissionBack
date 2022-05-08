@@ -1,19 +1,15 @@
 <?php
-require_once INC_DIR."functions.php";
-require_once INC_DIR."headers.php";
 
 function getGames(){
-    require_once 'db.php';
+    require_once MODULES_DIR. 'db.php';
 
     try{
         $pdo = getPdoConnection();
         $sql = "SELECT * FROM games";
-        $games = $pdo->prepare($sql);
-        $games->execute();
-        $result = $games->fetchAll(PDO::FETCH_ASSOC);
-        $json = json_encode($result);
-        echo $json;
-        return $json;
+        $games = $pdo->query($sql);
+
+        return $games->fetchAll();
+
     }catch(PDOException $e){
         throw $e;
     }

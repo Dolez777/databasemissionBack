@@ -1,20 +1,30 @@
 <?php
-require_once INC_DIR."functions.php";
 require_once INC_DIR."headers.php";
 require_once MODULES_DIR."authorization.php";
 
-$input = json_decode(file_get_contents("php://input"));
-$uname = filter_var($input->username,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$pw = filter_var($input->password,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$uname = filter_input(INPUT_POST, "username");
+$pw = filter_input(INPUT_POST, "password");
 
 if(!isset($_SESSION["username"]) && isset($uname)){
-    echo "iogfaes2";
     try {
         login($uname, $pw);
-        echo "jeeeee";
+        header("Location: index.php");
         exit;
     } catch (Exception $e) {
-        echo "gg";
+        echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
     }  
 }
 
+if(!isset($_SESSION["username"])){
+    ?>
+    
+        <form action="login.php" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" name="username" id="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" name="password" id="password"><br>
+            <input type="submit" class="btn btn-primary" value="Log in">
+        </form>
+    
+    
+    <?php } include TEMPLATES_DIR.'foot.php'; ?>
