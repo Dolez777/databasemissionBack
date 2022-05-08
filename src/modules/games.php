@@ -79,4 +79,23 @@ function deleteGame($id){
     
 }
 
+/*
+function updateGame($name) {
+    require_once 'db.php';
 
+    try{
+        $pdo = getPdoConnection();
+
+        $pdo->beginTransaction();
+        $sql = "INSERT INTO games (name) VALUES (?)";
+
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $name);        
+        $statement->execute();
+        $pdo->commit();
+
+
+    }catch(PDOException $e){
+        throw $e;
+    }
+}*/
