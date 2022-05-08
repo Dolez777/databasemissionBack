@@ -27,46 +27,56 @@ function addGame($name){
    /* if( !isset($fname) || !isset($lname) || !isset($uname) || !isset($pw) ){
         throw new Exception("Missing parameters! Cannot add person!");
     }*/
-
     if( !isset($name)){
         throw new Exception("Missing parameters! Cannot add game!");
     }
-    
     //Tarkistetaan, ettei tyhjiä arvoja muuttujissa
    /* if( empty($fname) || empty($lname) || empty($uname) || empty($pw) ){
         throw new Exception("Cannot set empty values!");
-    } */
-    
+    } */ 
     if( empty($name) ){
         throw new Exception("Cannot set empty values!");
     }
-
-
     try{
         $pdo = getPdoConnection();
-        $statement = $pdo->prepare("INSERT INTO games (name) VALUES (:name)");
-        $pdo->beginTransaction();
-        
-        $statement->execute(["name"=>$name]);
             //Suoritetaan parametrien lisääminen tietokantaan.
-            //$sql = "INSERT INTO games (name) VALUES (?)";
-            //$statement = $pdo->prepare($sql);
-           //$statement->bindParam(1, $name);
+        $sql = "INSERT INTO games (name) VALUES (?)";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $name);
             //$statement->bindParam(2, $lname);
             //$statement->bindParam(3, $uname);
             //$hash_pw = password_hash($pw, PASSWORD_DEFAULT);
             //$statement->bindParam(4, $hash_pw);
 
-            $pdo->commit();
-        
-    
-        $statement->execute();
-    }catch(\Exception $e){
-        if ($pdo->inTransaction()) {
-            $pdo->rollback();
-        }
+            $statement->execute();
+       
+    }catch(PDOException $e){
         throw $e;
     }
+}
+
+function deleteGame($id){
+    require_once 'db.php';
+
+    if( !isset($id) ){
+        throw new Exception("Missing parameters! Cannot delete person!");
+    }
+
+    try{
+        $pdo = getPdoConnection();
+        $pdo->beginTransaction();
+        
+        $sql = "DELETE FROM games WHERE id = ?";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $id);        
+        $statement->execute();
+        $pdo->commit();
+    }catch(PDOException $e){
+        // Rollback transaction on error
+        $pdo->rollBack();
+        throw $e;
+    }
+    
 }
 
 
