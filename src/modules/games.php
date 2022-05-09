@@ -93,3 +93,34 @@ function updateGame($id, $name, $releaseDate, $rating, $revenue) {
         throw $e;
     }
 }
+
+function addUser($uname, $pw){
+    require_once MODULES_DIR.'db.php'; // DB connection
+    
+    //Tarkistetaan onko muttujia asetettu
+    if(!isset($uname) || !isset($pw) ){
+        throw new Exception("Missing parameters! Cannot add person!");
+    }
+    
+    //Tarkistetaan, ettei tyhjiä arvoja muuttujissa
+    if(empty($uname) || empty($pw) ){
+        throw new Exception("Cannot set empty values!");
+    }
+    
+    try{
+        $pdo = getPdoConnection();
+        //Suoritetaan parametrien lisääminen tietokantaan.
+        $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(1, $fname);
+        $hash_pw = password_hash($pw, PASSWORD_DEFAULT);
+        $statement->bindParam(2, $hash_pw);
+        
+    
+        $statement->execute();
+    
+        echo "Tervetuloa ".$fname." ".$lname.". Sinut on lisätty tietokantaan"; 
+    }catch(PDOException $e){
+        throw $e;
+    }
+}

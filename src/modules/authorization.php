@@ -27,7 +27,7 @@ function login($uname, $pw){
         $statement->execute();
         
         if($statement->rowCount() <=0){
-            throw new Exception("Person not found! Cannot log in!");
+            throw new Exception("User not found! Cannot log in!");
         }
 
         $row = $statement->fetch();
