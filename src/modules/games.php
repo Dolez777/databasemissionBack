@@ -89,7 +89,7 @@ function updateGame($id, $name, $releaseDate, $rating, $revenue) {
     try{
         $pdo = getPdoConnection();
         
-        $sql = "UPDATE games SET = COALESCE(NULLIF('$name', ''), name), releaseDate = COALESCE(NULLIF('$releaseDate', 0), releaseDate), rating = COALESCE(NULLIF('$rating', ''), rating), revenue = COALESCE(NULLIF('$revenue', 0), releaseDate) WHERE id = $id";
+        $sql = "UPDATE games SET = COALESCE(NULLIF('$name', ''), name), releaseDate = COALESCE(NULLIF('$releaseDate', 0), releaseDate), rating = COALESCE(NULLIF('$rating', ''), rating), revenue = COALESCE(NULLIF('$revenue', 0), revenue) WHERE id = $id";
         $pdo->query($sql);
         
         
