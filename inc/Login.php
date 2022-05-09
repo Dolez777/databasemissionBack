@@ -1,5 +1,5 @@
 <?php
-include TEMPLATES_DIR.'headers.php';
+
 include MODULES_DIR.'/inc/authorization.php';
 
 $uname = filter_input(INPUT_POST, "username");
