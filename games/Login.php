@@ -1,6 +1,6 @@
 <?php
-require_once INC_DIR."headers.php";
-require_once MODULES_DIR."authorization.php";
+include INC_DIR."headers.php";
+include MODULES_DIR."authorization.php";
 
 $uname = filter_input(INPUT_POST, "username");
 $pw = filter_input(INPUT_POST, "password");

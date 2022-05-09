@@ -22,10 +22,10 @@
             <a class="nav-link active" aria-current="page" href="./">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="people.php">People</a>
+            <a class="nav-link" href="games.php">Games</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="person.php">Add new employee</a>
+            <a class="nav-link" href="addgame.php">Add new game</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="worktime.php">Add new work time</a>

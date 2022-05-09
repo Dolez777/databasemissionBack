@@ -1,10 +1,28 @@
 <?php
-require_once INC_DIR."functions.php";
-require_once INC_DIR."headers.php";
+include TEMPLATES_DIR.'head.php';
 require_once MODULES_DIR."games.php";
 
-$input = json_decode(file_get_contents("php://input"));
-$name = filter_var($input->name,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $fname = filter_input(INPUT_POST, "fname");
+    $lname = filter_input(INPUT_POST, "lname");
+    $uname = filter_input(INPUT_POST, "username");
+    $pw = filter_input(INPUT_POST, "password");
 
-    addGame($name);
+    if(isset($fname)){
+        try{
+            addGame($fname);
+            echo '<div class="alert alert-success" role="alert">Game added!!</div>';
+        }catch(Exception $e){
+            echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
+        }
+        
+    }
+?>
 
+    <form action="addgame.php" method="post">
+        <label for="fname">Game name:</label><br>
+        <input type="text" name="fname" id="fname"><br>
+        
+        <input type="submit" class="btn btn-primary" value="Add game">
+    </form>
+
+<?php   include TEMPLATES_DIR.'foot.php'; ?>
