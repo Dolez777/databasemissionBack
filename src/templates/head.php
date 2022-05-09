@@ -28,6 +28,9 @@
             <a class="nav-link" href="addgame.php">Add new game</a>
             </li>
             <li class="nav-item">
+            <a class="nav-link" href="user.php">Registation</a>
+            </li>
+            
             <?php 
                 if(isset($_SESSION["username"])){
                     echo '<a class="nav-link bg-danger" href="logout.php">Log out</a>';

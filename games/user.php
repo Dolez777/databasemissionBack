@@ -4,12 +4,10 @@ include MODULES_DIR.'games.php';
 
     //Filtteroidaan POST-inputit (ei käytetä string-filtteriä, koska deprekoitunut)
     //Jos parametria ei löydy, funktio palauttaa null
-    $fname = filter_input(INPUT_POST, "fname");
-    $lname = filter_input(INPUT_POST, "lname");
     $uname = filter_input(INPUT_POST, "username");
     $pw = filter_input(INPUT_POST, "password");
 
-    if(isset($fname)){
+    if(isset($uname)){
         try{
             addUser($uname, $pw);
             echo '<div class="alert alert-success" role="alert">Person added!!</div>';

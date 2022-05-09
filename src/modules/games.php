@@ -112,15 +112,16 @@ function addUser($uname, $pw){
         //Suoritetaan parametrien lisääminen tietokantaan.
         $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         $statement = $pdo->prepare($sql);
-        $statement->bindParam(1, $fname);
+        $statement->bindParam(1, $uname);
         $hash_pw = password_hash($pw, PASSWORD_DEFAULT);
         $statement->bindParam(2, $hash_pw);
         
     
         $statement->execute();
     
-        echo "Tervetuloa ".$fname." ".$lname.". Sinut on lisätty tietokantaan"; 
+        echo "Tervetuloa ".$uname." Sinut on lisätty tietokantaan"; 
     }catch(PDOException $e){
+        echo "fail";
         throw $e;
     }
 }
