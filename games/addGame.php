@@ -3,9 +3,7 @@ include TEMPLATES_DIR.'head.php';
 require_once MODULES_DIR."games.php";
 
     $fname = filter_input(INPUT_POST, "fname");
-    $lname = filter_input(INPUT_POST, "lname");
-    $uname = filter_input(INPUT_POST, "username");
-    $pw = filter_input(INPUT_POST, "password");
+
 
     if(isset($fname)){
         try{

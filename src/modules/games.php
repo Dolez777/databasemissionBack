@@ -75,20 +75,22 @@ function deleteGame($id){
     
 }
 
-function updateGame($id, $name, $releaseDate, $rating, $revenue) {
+function updateGame($name, $newname) {
     require_once 'db.php'; // DB connection
-    
-    if( !isset($id) ){
+     echo "test";
+    if( !isset($name) ){
         throw new Exception("Couldn't update game!");
     }
-    
+   
     try{
         $pdo = getPdoConnection();
-        
-        $sql = "UPDATE games SET = COALESCE(NULLIF('$name', ''), name), releaseDate = COALESCE(NULLIF('$releaseDate', 0), releaseDate), rating = COALESCE(NULLIF('$rating', ''), rating), revenue = COALESCE(NULLIF('$revenue', 0), revenue) WHERE id = $id";
-        $pdo->query($sql);
-        
-        
+        $pdo->beginTransaction();
+
+        //$sql = "UPDATE games SET = COALESCE(NULLIF('$name', ''), name), releaseDate = COALESCE(NULLIF('$releaseDate', 0), releaseDate), rating = COALESCE(NULLIF('$rating', ''), rating), revenue = COALESCE(NULLIF('$revenue', 0), revenue) WHERE id = $id";
+        $sql = "UPDATE games set name = '$newname' where name = '$name'";
+        $statement = $pdo->prepare($sql);
+        $statement->execute();
+        $pdo->commit();
     }catch(PDOException $e){
         throw $e;
     }

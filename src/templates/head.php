@@ -28,6 +28,9 @@
             <a class="nav-link" href="addgame.php">Add new game</a>
             </li>
             <li class="nav-item">
+            <a class="nav-link" href="updateGame.php">Update game</a>
+            </li>
+            <li class="nav-item">
             <a class="nav-link" href="user.php">Registation</a>
             </li>
             
