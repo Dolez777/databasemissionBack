@@ -1,5 +1,6 @@
 <?php
-
+include TEMPLATES_DIR.'head.php';
+include MODULES_DIR.'/inc/authorization.php';
 
 $uname = filter_input(INPUT_POST, "username");
 $pw = filter_input(INPUT_POST, "password");
@@ -9,6 +10,7 @@ if(!isset($_SESSION["username"]) && isset($uname)){
     try {
         login($uname, $pw);
         exit;
+        header("Location: index.php");
     } catch (Exception $e) {
         echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
     }
