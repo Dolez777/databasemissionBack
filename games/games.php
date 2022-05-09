@@ -7,7 +7,7 @@ $id = filter_input(INPUT_GET, "id");
 if(isset($id)){
     try{
         deleteGame($id);
-        echo '<div class="alert alert-success" role="alert">Person deleted!!</div>';
+        echo '<div class="alert alert-success" role="alert">Game deleted!!</div>';
     }catch(Exception $e){
         echo '<div class="alert alert-danger" role="alert">'.$e->getMessage().'</div>';
     }
@@ -18,7 +18,7 @@ $games = getgames();
 
 echo "<ul>";
 foreach($games as $g){
-    echo "<li>".$g["name"]." ".'<a href="games.php?id=' . $g["id"] . '" class="btn btn-primary">Delete</a> </li>';
+    echo "<li>"."<img src=".$g["image"]."></img>".$g["name"]." ".'<a href="games.php?id=' . $g["id"] . '" class="btn btn-primary">Delete</a> </li>';
 }
 echo "</ul>";
 

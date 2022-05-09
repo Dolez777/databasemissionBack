@@ -55,7 +55,7 @@ function deleteGame($id){
     require_once 'db.php';
 
     if( !isset($id) ){
-        throw new Exception("Missing parameters! Cannot delete person!");
+        throw new Exception("Missing parameters! Cannot delete game!");
     }
 
     try{
